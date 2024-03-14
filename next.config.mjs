@@ -1,9 +1,17 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
-  webpack: (config) => {
+  webpack: (config, options) => {
     config.module.rules.push({
-      test: /\.LICENSE$/,
-      use: "raw-loader",
+      test: /\.md$/,
+      use: "ignore-loader",
+    });
+    config.module.rules.push({
+      test: /\.node$/,
+      loader: "file-loader",
+      options: {
+        name: "static/[name].[ext]",
+      },
     });
 
     return config;

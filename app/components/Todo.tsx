@@ -16,11 +16,12 @@ const Todo: React.FC<Props> = ({
   deleteTodoItem,
 }) => {
   const [editing, setEditing] = useState(false);
-  const [text, setText] = useState(todo.text);
+  const [header, setHeader] = useState(todo.header);
+  const [description, setDescription] = useState(todo.description);
   const [isDone, setIsDone] = useState(todo.done);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+    // setText(e.target.value);
   };
 
   const handleIsDone = async () => {
@@ -33,13 +34,13 @@ const Todo: React.FC<Props> = ({
   };
 
   const handleSave = async () => {
-    changeTodoText(todo.id, text);
-    setEditing(false);
+    // changeTodoText(todo.id, text);
+    // setEditing(false);
   };
 
   const handleCancel = () => {
-    setEditing(false);
-    setText(todo.text);
+    // setEditing(false);
+    // setText(todo.text);
   };
 
   const handleDelete = () => {
@@ -49,22 +50,33 @@ const Todo: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex items-center gap-2 p-4 border-gray-200 border-solid border rounded-lg">
+    <div className="flex flex-row items-center gap-2 p-4 border-gray-200 border-solid border rounded-lg">
       <input
         type="checkbox"
         className="text-blue-200 rounded-sm h-4 w-4"
         checked={isDone}
         onChange={handleIsDone}
       />
-      <input
-        type="text"
-        value={text}
-        onChange={handleTextChange}
-        readOnly={!editing}
-        className={`${
-          todo.done ? "line-through" : ""
-        } outline-none read-only:border-transparent focus:border border-gray-200 rounded px-2 py-1 w-full`}
-      />
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <input
+          type="text"
+          value={header}
+          onChange={handleTextChange}
+          readOnly={!editing}
+          className={`${
+            todo.done ? "line-through" : ""
+          } outline-none read-only:border-transparent focus:border border-gray-200 rounded px-2 py-1 w-full`}
+        />
+        <input
+          type="text"
+          value={description}
+          onChange={handleTextChange}
+          readOnly={!editing}
+          className={`${
+            todo.done ? "line-through" : ""
+          } outline-none read-only:border-transparent focus:border border-gray-200 rounded px-2 py-1 w-full`}
+        />
+      </div>
       <div className="flex gap-1 ml-auto">
         {editing ? (
           <button

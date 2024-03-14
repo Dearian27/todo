@@ -1,32 +1,29 @@
-"use client";
+// "use client";
 import Image from "next/image";
 import styles from "./page.module.css";
 import Todos from "./components/Todos";
 import { db } from "@/drizzle/db";
 import { todosSchema } from "@/drizzle/schema/schema";
-import Button from "./components/Button";
+import Form from "./components/Form";
+import { insertTodo } from "@/actions/todoActions";
+import { todoType } from "./utils/types";
+import { createTodo, getTodos } from "./action";
+// import { tursoReq } from "./action";
 
-export default function Home() {
-  // .from(todosSchema).all();
-
-  const newItem = {
-    header: "Новий елемент",
-    description: "Новий елемент",
-  };
-  const addElement = async () => {
-    // const result = await db.select().from(todosSchema).all();
-    // const result = await db.execute("SELECT * FROM users");
-    const result = await db.select().from(todosSchema).all();
-    console.log(result);
-  };
-
-  // console.log(result);
+export default async function Home() {
+  const { rows } = await getTodos();
+  const todos = JSON.parse(JSON.stringify(rows));
 
   return (
     <main className={styles.main}>
-      hello
-      <Button click={addElement}>Add</Button>
-      {/* <Todos /> */}
+      hello wirld
+      {/* {result.toString()} */}
+      {/* <Form click={addElement}>Add</Form> */}
+      {todos ? (
+        <Todos todos={todos} />
+      ) : (
+        <h2 style={{ color: "red" }}>Error getting todos</h2>
+      )}
     </main>
   );
 }

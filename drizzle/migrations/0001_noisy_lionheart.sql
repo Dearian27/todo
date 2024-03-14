@@ -1,0 +1,1 @@
+ALTER TABLE todos ADD `id` integer PRIMARY KEY NOT NULL;
